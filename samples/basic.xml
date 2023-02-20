@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SPDXLicenseCollection xmlns="http://www.spdx.org/license">
+	<license isOsiApproved="true" licenseId="MIT" name="MIT License">
+		<text>
+			This is the most basic license text.
+
+			<p>This is a new paragraph.</p>
+		</text>
+	</license>
+</SPDXLicenseCollection>
