@@ -23,5 +23,10 @@ func main() {
 
 	xml.Unmarshal(b, &lics)
 
-	fmt.Printf("%#v", lics)
+	fmt.Printf("%#v\n\n", lics)
+
+	for _, l := range lics.Licenses {
+		fmt.Printf("License: %s (%s)\n", l.Name, l.LicenseID)
+		PrettyPrintText(l.Text)
+	}
 }

@@ -41,12 +41,52 @@ const (
 type SpacingType int
 
 const (
-	SpacingUnknown SpacingType = iota
+	SpacingUnspecified SpacingType = iota
 	SpacingNone
 	SpacingBefore
 	SpacingAfter
 	SpacingBoth
+	SpacingUnknown
 )
+
+// getSpacingType determines which type of spacing is chosen for this attribute.
+func getSpacingType(s string) SpacingType {
+	switch s {
+	case "":
+		return SpacingUnspecified
+	case "none":
+		return SpacingNone
+	case "before":
+		return SpacingBefore
+	case "after":
+		return SpacingAfter
+	case "both":
+		return SpacingBoth
+	default:
+		return SpacingUnknown
+	}
+}
+
+// getSpacingString returns the standard string corresponding to the
+// specified type of spacing.
+func getSpacingString(st SpacingType) string {
+	switch st {
+	case SpacingUnspecified:
+		return "<unspecified>"
+	case SpacingNone:
+		return "none"
+	case SpacingBefore:
+		return "before"
+	case SpacingAfter:
+		return "after"
+	case SpacingBoth:
+		return "both"
+	case SpacingUnknown:
+		return "UNKNOWN"
+	default:
+		return "DEFAULT-UNKNOWN"
+	}
+}
 
 // TextContent is one element of text content, which may include various
 // nested TextContent elements as well.
@@ -110,3 +150,61 @@ type TextContent struct {
 // ListItem is a slice of all TextContent elements contained within one
 // <item> element in a <list>.
 type ListItem []TextContent
+
+// getTextContentType determines which type of TextContent we are entering
+// (or exiting?) based on the element's name.
+func getTextContentType(tag string) TextContentType {
+	switch tag {
+	case "p":
+		return TCParagraph
+	case "bullet":
+		return TCBullet
+	case "list":
+		return TCList
+	case "optional":
+		return TCOptional
+	case "alt":
+		return TCAlt
+	case "br":
+		return TCBr
+	case "titleText":
+		return TCTitleText
+	case "copyrightText":
+		return TCCopyrightText
+	case "standardLicenseHeader":
+		return TCStandardLicenseHeader
+	default:
+		return TCUnknown
+	}
+}
+
+// getTextContentString returns the standard element name string
+// corresponding to the element's type.
+func getTextContentString(t TextContentType) string {
+	switch t {
+	case TCCharData:
+		return "CHARDATA"
+	case TCParagraph:
+		return "p"
+	case TCBullet:
+		return "bullet"
+	case TCList:
+		return "list"
+	case TCOptional:
+		return "optional"
+	case TCAlt:
+		return "alt"
+	case TCBr:
+		return "br"
+	case TCTitleText:
+		return "titleText"
+	case TCCopyrightText:
+		return "copyrightText"
+	case TCStandardLicenseHeader:
+		return "standardLicenseHeader"
+	case TCUnknown:
+		return "UNKNOWN"
+	default:
+		return "DEFAULT-UNKNOWN"
+	}
+}
